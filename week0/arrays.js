@@ -75,7 +75,11 @@ console.log({
  * Should return another Array
  */
 
-const multiplied = myArray.map((value) => typeof value === 'number' ? value * 2 : value);
+function isNum(value) {
+    return typeof value === 'number';
+}
+
+const multiplied = myArray.filter((value) => isNum(value)).map((value) => value * 2);
 
 console.log({
     multiplied,
@@ -86,7 +90,7 @@ console.log({
  */
 
 const sum = myArray
-    .filter((value) => typeof value === 'number')
+    .filter((value) => isNum(value))
     .reduce((sum, value) => sum + value);
 
 console.log({
@@ -97,8 +101,12 @@ console.log({
  * 8. Sort array in ascending and descending order
  */
 
-const asc = myArray.slice(0).sort((a, b) => comparator('ASC', a, b));
-const desc = myArray.slice(0).sort((a, b) => comparator('DESC', a, b));
+const asc = myArray.slice(0)
+    .filter((value) => isNum(value))
+    .sort((a, b) => comparator('ASC', a, b));
+const desc = myArray.slice(0)
+    .filter((value) => isNum(value))
+    .sort((a, b) => comparator('DESC', a, b));
 
 console.log({
     asc,
