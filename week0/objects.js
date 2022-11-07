@@ -10,14 +10,20 @@ const invoice = {
  * 1. Log firstName and lastName in dot notation and bracket notation
  */
 
-console.log(`First name: `);
-console.log(`Last name: `);
+console.log(`First name: ${invoice.firstName}`);
+console.log(`Last name: ${invoice['lastName']}`);
 
 /**
  * 2. Log Object Keys
  */
 
-const keys = invoice.YOUR_METHOD;
+isFunction = function(obj) {
+    return !!(obj && obj.constructor && obj.call && obj.apply);
+};
+
+
+invoice.getKeys = function () { return Object.keys(this).filter((key) => !isFunction(this[`${key}`]))};
+const keys = invoice.getKeys();
 
 console.log({
     keys,
@@ -27,7 +33,8 @@ console.log({
  * 3. Log Object values
  */
 
-const values = invoice.YOUR_METHOD;
+invoice.getValues = function () { return Object.values(this).filter((value) => !isFunction(value)) };
+const values = invoice.getValues();
 
 console.log({
     values,
@@ -37,26 +44,30 @@ console.log({
  * 4. Log Object entries
  */
 
-const entries = invoice.YOUR_METHOD;
+invoice.getEntries = function () { return Object.entries(this) };
+const entries = invoice.getEntries();
 
 console.log({
     entries,
 });
 
 /**
- * 5. Create second variable invoce from original
+ * 5. Create second variable invoice from original
  * Please, use more than one solution
  */
 
-const copiedInvoice = {};
+const copiedInvoice = Object.assign({}, invoice); // clone with methods
+// const copiedInvoice2 = { ...invoice } // clone with methods 2
+// const copiedInvoice = JSON.parse(JSON.stringify(invoice)); // clone only keys:values (without methods)
+// const copiedInvoice = structuredClone(invoice); // not working in nodejs yet
 
 console.log({
-    copiedInvoice,
+    copiedInvoice
 });
 
 /**
  * 6. Modify copiedInvoice amount value
- * Important: original invoice amount shouldnt be modified
+ * Important: original invoice amount shouldn't be modified
  */
 
 copiedInvoice.amount = 300;
@@ -69,3 +80,4 @@ console.log({
 /**
  * 7. Loop through object and log key-values
  */
+console.log(invoice.getEntries());
