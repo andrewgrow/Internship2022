@@ -1,0 +1,22 @@
+{
+  "name": "internship2022",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewgrow/Internship2022.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewgrow/Internship2022/issues"
+  },
+  "homepage": "https://github.com/andrewgrow/Internship2022#readme",
+  "dependencies": {
+    "node": "^19.0.1"
+  }
+}

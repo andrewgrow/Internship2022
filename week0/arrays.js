@@ -6,7 +6,31 @@ const myArray = [1, 10, 3, 6, 'ArrayElement'];
  */
 
 // console.log(`3: ${}`);
+console.log(`3: ${findElementViaIndex(myArray, 3)}`);
+console.log(`3: ${findElementViaValue(myArray, 3)}`);
+console.log(`3: ${findElementViaMatching(myArray, 3)}`);
+
 // console.log(`6: ${}`);
+console.log(`6: ${findElementViaIndex(myArray, 6)}`);
+console.log(`6: ${findElementViaValue(myArray, 6)}`);
+console.log(`6: ${findElementViaMatching(myArray.at, 6)}`);
+
+// Note: there is a polyfill with .at method, that returns the item located at the specified index.
+// It can be used too.
+
+function findElementViaIndex(array, value) {
+    const position = array.findIndex((el) => el === value);
+    return array[position];
+}
+
+function findElementViaValue(array, value) {
+    return array.find(el => el === value);
+}
+
+function findElementViaMatching(array, value) {
+    const position = array.indexOf(value, 0);
+    return array[position];
+}
 
 /**
  *  2. Log type of each element
