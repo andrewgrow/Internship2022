@@ -13,7 +13,7 @@ console.log(`3: ${findElementViaMatching(myArray, 3)}`);
 // console.log(`6: ${}`);
 console.log(`6: ${findElementViaIndex(myArray, 6)}`);
 console.log(`6: ${findElementViaValue(myArray, 6)}`);
-console.log(`6: ${findElementViaMatching(myArray.at, 6)}`);
+console.log(`6: ${findElementViaMatching(myArray, 6)}`);
 
 // Note: there is a polyfill with .at method, that returns the item located at the specified index.
 // It can be used too.
@@ -36,16 +36,13 @@ function findElementViaMatching(array, value) {
  *  2. Log type of each element
  */
 
-myArray.forEach(() => {
-    console.log();
-});
+myArray.forEach((el) => console.log(typeof el));
 
 /**
  *  3. Check if all elements in array is Number
  *  Should return Boolean
  */
-
-const isNumber = myArray.YOUR_METHOD;
+const isNumber = myArray.every((value) => typeof value === 'number');
 
 console.log({
     isNumber,
@@ -56,7 +53,7 @@ console.log({
  * Should return Boolean
  */
 
-const isBiggerThanFive = myArray.YOUR_METHOD;
+const isBiggerThanFive = myArray.some((value) => value > 5);
 
 console.log({
     isBiggerThanFive,
@@ -67,7 +64,7 @@ console.log({
  * Should return another Array
  */
 
-const elementsBiggerThanFive = myArray.YOUR_METHOD;
+const elementsBiggerThanFive = myArray.filter((value) => value > 5);
 
 console.log({
     elementsBiggerThanFive,
@@ -78,7 +75,7 @@ console.log({
  * Should return another Array
  */
 
-const multiplied = myArray.YOUR_METHOD;
+const multiplied = myArray.map((value) => typeof value === 'number' ? value * 2 : value);
 
 console.log({
     multiplied,
@@ -88,7 +85,9 @@ console.log({
  * 7. Calculate array sum
  */
 
-const sum = myArray.reduce();
+const sum = myArray
+    .filter((value) => typeof value === 'number')
+    .reduce((sum, value) => sum + value);
 
 console.log({
     sum,
@@ -98,10 +97,19 @@ console.log({
  * 8. Sort array in ascending and descending order
  */
 
-const asc = myArray.YOUR_METHOD;
-const desc = myArray.YOUR_METHOD;
+const asc = myArray.slice(0).sort((a, b) => comparator('ASC', a, b));
+const desc = myArray.slice(0).sort((a, b) => comparator('DESC', a, b));
 
 console.log({
     asc,
     desc,
 });
+
+function comparator(type, a, b) {
+    if (a === b) return 0;
+    switch (type) {
+        case 'ASC' : return (a < b) ? -1 : 1;
+        case 'DESC' : return (a > b) ? -1 : 1;
+        default: throw new Error('Unexpected Command');
+    }
+}
