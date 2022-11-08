@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/andrewgrow/Internship2022#readme",
   "dependencies": {
+    "express": "^4.18.2",
     "node": "^19.0.1"
   }
 }
