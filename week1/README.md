@@ -4,14 +4,15 @@ Lets write another component, called "Users" in express server.
 This route need to handle 4 requests: create users, find user, update user, and delete user.
 No need to handle functionality with DataBase for now. You can manage this 4 operations with variable inside your app.
 
-### Server start instuctions:
+### Server start instructions:
 * `npm install` inside internship folder, to install eslint
-* `npm install` inside week1 folder
+* `npm install` inside week1/express folder
 * `npm install nodemon` https://www.npmjs.com/package/nodemon
 
 ### Run in terminal
 * `nodemon` - if you install package global
 * `npx nodemon` - if you install package local
+* `npx eslint ./week1` - from root folder
 
 ### To test your requests check this tool:
 https://www.postman.com/
