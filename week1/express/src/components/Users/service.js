@@ -1,6 +1,6 @@
-function update() {
+function update(userId) {
     return {
-        message: 'User updated successful.',
+        message: `User ${userId} updated successful.`,
     };
 }
 
