@@ -13,7 +13,7 @@ No need to handle functionality with DataBase for now. You can manage this 4 ope
 * `nodemon` - if you install package global
 * `npx nodemon` - if you install package local
 * `npx eslint ./week1` - from root folder
-* `git cz` - commit changes via Commitizen CLI tools:
+* `npm run commit` - commit changes via Commitizen CLI tools:
 
 ### To test your requests check this tool:
 https://www.postman.com/
