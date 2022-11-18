@@ -1,7 +1,7 @@
 const logger = require('intel').getLogger('Users|service');
 
-function update(userId) {
-    const resultMessage = `User ${userId} updated successful.`;
+function patch(userId) {
+    const resultMessage = `User ${userId} patched successful.`;
 
     logger.info(resultMessage);
 
@@ -44,5 +44,5 @@ module.exports = {
     create,
     find,
     destroy,
-    update,
+    patch,
 };

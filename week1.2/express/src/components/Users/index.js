@@ -52,9 +52,9 @@ async function destroy(req, res) {
     }
 }
 
-async function update(req, res) {
+async function patch(req, res) {
     try {
-        const user = await UsersService.update(+req.params.id);
+        const user = await UsersService.patch(+req.params.id);
 
         return res.status(200).json({
             data: user,
@@ -73,5 +73,5 @@ module.exports = {
     create,
     find,
     destroy,
-    update,
+    patch,
 };
