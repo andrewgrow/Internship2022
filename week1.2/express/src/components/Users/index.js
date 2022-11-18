@@ -1,13 +1,18 @@
+const logger = require('intel').getLogger('Users|controller');
 const UsersService = require('./service');
 
 async function create(req, res) {
     try {
+        logger.debug('create');
+
         const createdUser = await UsersService.create(req.body);
 
         return res.status(201).json({
             data: createdUser,
         });
     } catch (error) {
+        logger.error(error);
+
         return res.status(500).json({
             error: error.message,
             details: null,

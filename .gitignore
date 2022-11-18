@@ -10,3 +10,4 @@ nbproject
 .node_history
 .history
 .vscode
+/logs/*

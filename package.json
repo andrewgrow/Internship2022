@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "commit": "cz"
+      "commit": "cz",
+      "eslint": "npx eslint ."
   },
   "devDependencies": {
     "cz-conventional-changelog": "3.3.0",
@@ -10,7 +11,6 @@
   },
   "dependencies": {
     "commitizen": "4.2.5",
-    "morgan": "1.10.0",
     "nodemon": "2.0.20"
   },
   "config": {

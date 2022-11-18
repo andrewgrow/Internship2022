@@ -12,7 +12,7 @@ No need to handle functionality with DataBase for now. You can manage this 4 ope
 ### Run in terminal
 * `nodemon` - if you install package global
 * `npx nodemon` - if you install package local
-* `npx eslint ./week1.2` - from root folder
+* `npm run eslint` - from root folder
 * `npm run commit` - commit changes via Commitizen CLI tools:
 
 ### To test your requests check this tool:

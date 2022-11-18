@@ -1,7 +1,9 @@
+const logger = require('intel').getLogger('Server|Events');
+
 function onListening() {
     const address = this.address();
 
-    console.log(`Server listening on ${typeof addr === 'string' ? `pipe ${address}` : `port ${address.port}`}`);
+    logger.info(`Server listening on ${typeof addr === 'string' ? `pipe ${address}` : `port ${address.port}`}`);
 }
 
 function bind(Server) {
