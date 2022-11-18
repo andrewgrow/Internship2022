@@ -1,10 +1,8 @@
-const logger = require('intel').getLogger('Users|controller');
+const logger = require('intel').getLogger('Users|Controller');
 const UsersService = require('./service');
 
 async function create(req, res) {
     try {
-        logger.debug('create');
-
         const createdUser = await UsersService.create(req.body);
 
         return res.status(201).json({
@@ -28,6 +26,8 @@ async function find(req, res) {
             data: user,
         });
     } catch (error) {
+        logger.error(error);
+
         return res.status(500).json({
             error: error.message,
             details: null,
@@ -43,6 +43,8 @@ async function destroy(req, res) {
             data: user,
         });
     } catch (error) {
+        logger.error(error);
+
         return res.status(500).json({
             error: error.message,
             details: null,
@@ -52,12 +54,14 @@ async function destroy(req, res) {
 
 async function update(req, res) {
     try {
-        const user = await UsersService.update(req.body);
+        const user = await UsersService.update(+req.params.id);
 
         return res.status(200).json({
             data: user,
         });
     } catch (error) {
+        logger.error(error);
+
         return res.status(500).json({
             error: error.message,
             details: null,

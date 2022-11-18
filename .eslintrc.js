@@ -10,9 +10,7 @@ module.exports = {
     },
     rules: {
         indent: ['error', 4],
-        'no-console': ['error', {
-            allow: ['warn', 'error', 'log'],
-        }],
+        'no-console': 'error',
         'padding-line-between-statements': [
             'error',
             {
