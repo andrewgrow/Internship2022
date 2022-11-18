@@ -3,13 +3,13 @@
     "commit": "cz"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^3.3.0",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "8.27.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.26.0"
   },
   "dependencies": {
-    "commitizen": "^4.2.5",
+    "commitizen": "4.2.5",
     "nodemon": "2.0.20"
   },
   "config": {

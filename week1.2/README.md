@@ -6,13 +6,13 @@ No need to handle functionality with DataBase for now. You can manage this 4 ope
 
 ### Server start instructions:
 * `npm install` inside internship folder, to install eslint
-* `npm install` inside week1/express folder
+* `npm install` inside week1.2/express folder
 * `npm install nodemon` https://www.npmjs.com/package/nodemon
 
 ### Run in terminal
 * `nodemon` - if you install package global
 * `npx nodemon` - if you install package local
-* `npx eslint ./week1` - from root folder
+* `npx eslint ./week1.2` - from root folder
 * `npm run commit` - commit changes via Commitizen CLI tools:
 
 ### To test your requests check this tool:
@@ -21,7 +21,7 @@ https://www.postman.com/
 
 ### Week 1.2 task
 
- 1. Install HTTP request logger and connect it to your server 
+ 1. Install HTTP request logger and connect it to your server
     - [Morgan npm](https://www.npmjs.com/package/morgan)
     - Examples:
         - https://levelup.gitconnected.com/how-to-use-morgan-in-your-nodejs-project-3d1a82de81ac
@@ -29,7 +29,7 @@ https://www.postman.com/
  2. Lets start with validating input parameters to your controllers.
     - [Validation library](https://www.npmjs.com/package/joi)
     - Validate inputs on route level based on schema (Validation Middleware)
-    - Validate inputs inside controller 
+    - Validate inputs inside controller
     - Examples:
         - https://softchris.github.io/pages/joi.html#introducing-joi
         - https://medium.com/geekculture/express-js-api-validation-with-joi-4840505f1e5f
