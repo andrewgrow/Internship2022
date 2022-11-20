@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const Security = require('./security');
 
 module.exports = {
     init(app) {
@@ -17,5 +18,7 @@ module.exports = {
             );
             next();
         });
+
+        app.use(Security.jwtVerification());
     },
 };
