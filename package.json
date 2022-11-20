@@ -1,7 +1,8 @@
 {
   "scripts": {
       "commit": "cz",
-      "eslint": "npx eslint ."
+      "eslint": "npx eslint .",
+      "eslint:fix": "npx eslint . --fix"
   },
   "devDependencies": {
     "cz-conventional-changelog": "3.3.0",

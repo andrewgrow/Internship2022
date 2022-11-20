@@ -1,5 +1,6 @@
 const path = require('path');
-require('dotenv').config({path: path.resolve(path.join(__dirname, '../..', '.env'))});
+
+require('dotenv').config({ path: path.resolve(path.join(__dirname, '../..', '.env')) });
 
 const http = require('http');
 

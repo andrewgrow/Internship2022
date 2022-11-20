@@ -11,6 +11,7 @@ module.exports = {
     rules: {
         indent: ['error', 4],
         'no-console': 'error',
+        'max-len': ['error', 120],
         'padding-line-between-statements': [
             'error',
             {

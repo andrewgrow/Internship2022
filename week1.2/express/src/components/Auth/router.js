@@ -13,5 +13,4 @@ router.use((req, res, next) => {
 
 router.post('/', UserValidation.validateSignIn, AuthComponent.signIn); // POST http://localhost:3000/sign_in
 
-
 module.exports = router;
