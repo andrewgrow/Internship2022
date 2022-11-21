@@ -1,6 +1,7 @@
 const logger = require('intel').getLogger('Users|service');
 
 function patch(userId) {
+    if (Number.isNaN(userId)) throw new Error('UserId must be a number');
     const resultMessage = `User ${userId} patched successful.`;
 
     logger.info(resultMessage);
@@ -11,6 +12,7 @@ function patch(userId) {
 }
 
 function find(userId) {
+    if (Number.isNaN(userId)) throw new Error('UserId must be a number');
     const resultMessage = `Found user with id ${userId}`;
 
     logger.info(resultMessage);
@@ -21,6 +23,7 @@ function find(userId) {
 }
 
 function destroy(userId) {
+    if (Number.isNaN(userId)) throw new Error('UserId must be a number');
     const resultMessage = `Deleted user with id ${userId}`;
 
     logger.info(resultMessage);
