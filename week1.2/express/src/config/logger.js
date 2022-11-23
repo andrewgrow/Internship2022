@@ -1,11 +1,22 @@
+const fs = require('fs');
 const morgan = require('morgan');
 const logrotate = require('logrotate-stream');
 const path = require('path');
 const intel = require('intel');
 
+function resolveLogFolder() {
+    const logsFolder = path.resolve('./logs');
+
+    if (!fs.existsSync(logsFolder)) {
+        fs.mkdirSync(logsFolder);
+    }
+
+    return logsFolder;
+}
+
 // configuration for all log streams
 const config = {
-    path: path.resolve('./logs'),
+    path: resolveLogFolder(),
     size: '10m',
     keep: 10,
     level: intel.DEBUG,
