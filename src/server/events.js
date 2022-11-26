@@ -3,7 +3,7 @@ const logger = require('intel').getLogger('Server|Events');
 function onListening() {
     const address = this.address();
 
-    logger.info(`Server listening on ${typeof addr === 'string' ? `pipe ${address}` : `port ${address.port}`}`);
+    logger.info(`Server listening on ${address.port}`);
 }
 
 function bind(Server) {

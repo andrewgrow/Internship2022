@@ -1,22 +1,37 @@
 {
-  "scripts": {
-      "commit": "cz",
-      "eslint": "npx eslint .",
-      "eslint:fix": "npx eslint . --fix"
-  },
-  "devDependencies": {
-    "cz-conventional-changelog": "3.3.0",
-    "eslint": "8.27.0",
-    "eslint-config-airbnb-base": "15.0.0",
-    "eslint-plugin-import": "2.26.0"
-  },
-  "dependencies": {
-    "commitizen": "4.2.5",
-    "nodemon": "2.0.20"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+    "name": "week3",
+    "version": "1.3.0",
+    "description": "Learning project of Onix-Systems Internship. Autumn 2022",
+    "main": "app.js",
+    "author": "Andrew Grow",
+    "license": "ISC",
+    "scripts": {
+        "commit": "cz",
+        "eslint": "npx eslint .",
+        "eslint:fix": "npx eslint . --fix",
+        "start": "npx nodemon app.js"
+    },
+    "dependencies": {
+        "cz-conventional-changelog": "3.3.0",
+        "eslint": "8.27.0",
+        "eslint-config-airbnb-base": "15.0.0",
+        "eslint-plugin-import": "2.26.0",
+        "body-parser": "1.20.1",
+        "dotenv": "16.0.3",
+        "express": "4.18.2",
+        "intel": "1.2.0",
+        "joi": "17.7.0",
+        "jsonwebtoken": "8.5.1",
+        "logrotate-stream": "0.2.8",
+        "morgan": "1.10.0"
+    },
+    "devDependencies": {
+        "commitizen": "4.2.5",
+        "nodemon": "2.0.20"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
     }
-  }
 }
