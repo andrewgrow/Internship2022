@@ -1,5 +1,5 @@
 conn = new Mongo();
-db = conn.getDB('divo');
+db = conn.getDB('onyx-internship');
 
 /** Examples for creating via this init script
 db.myCollectionName.createIndex({ "address.zip": 1 }, { unique: false });

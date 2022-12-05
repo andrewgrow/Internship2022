@@ -1,23 +1,15 @@
-### Week 1 task
-
-Lets write another component, called "Users" in express server.
-This route need to handle 4 requests: create users, find user, update user, and delete user.
-No need to handle functionality with DataBase for now. You can manage this 4 operations with variable inside your app.
-
 ### Server start instructions:
-* `npm install` inside internship folder, to install eslint
-* `npm install` inside week1.2/express folder
-* `npm install nodemon` https://www.npmjs.com/package/nodemon
+* `npm install` inside root folder, to install dependencies
 
 ### Run in terminal
 * `nodemon` - if you install package global
 * `npx nodemon` - if you install package local
 * `npm run eslint` - from root folder
-* `npm run commit` - commit changes via Commitizen CLI tools:
+* `npm run commit` - commit changes via Commitizen CLI tools
 
-### To test your requests check this tool:
-https://www.postman.com/
-
+### Run DB via Docker
+* `docker-compose up` - rename `docker-compose.yml.mongo` to `docker-compose.yml` and run command to build DB instance
+* Connect user `mongouser`, password `mongopassword`, port `27017`, DB `onyx-internship`
 
 ### Week 1.2 task
 
