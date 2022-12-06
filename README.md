@@ -9,7 +9,7 @@
 
 ### Run DB via Docker
 * `docker-compose up` - rename `docker-compose.yml.mongo` to `docker-compose.yml` and run command to build DB instance
-* Connect user `mongouser`, password `mongopassword`, port `27017`, DB `onyx-internship`
+* Connect user `mongouser`, password `mongopassword`, port `27017`, DB `onyx-internship`, AUTHENTICATION DATABASE `admin`
 
 ### Week 1.2 task
 
