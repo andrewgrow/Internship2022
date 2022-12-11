@@ -11,26 +11,16 @@
 * `docker-compose up` - rename `docker-compose.yml.mongo` to `docker-compose.yml` and run command to build DB instance
 * Connect user `mongouser`, password `mongopassword`, port `27017`, DB `onyx-internship`, AUTHENTICATION DATABASE `admin`
 
-### Week 1.2 task
+### Week 1.3 task
 
- 1. Install HTTP request logger and connect it to your server
-    - [Morgan npm](https://www.npmjs.com/package/morgan)
-    - Examples:
-        - https://levelup.gitconnected.com/how-to-use-morgan-in-your-nodejs-project-3d1a82de81ac
-        - https://www.digitalocean.com/community/tutorials/nodejs-getting-started-morgan
- 2. Lets start with validating input parameters to your controllers.
-    - [Validation library](https://www.npmjs.com/package/joi)
-    - Validate inputs on route level based on schema (Validation Middleware)
-    - Validate inputs inside controller
-    - Examples:
-        - https://softchris.github.io/pages/joi.html#introducing-joi
-        - https://medium.com/geekculture/express-js-api-validation-with-joi-4840505f1e5f
- 3. Create protected route /account. This will be managed by JWT.
-    - Install [JWT](https://www.npmjs.com/package/jsonwebtoken)
-    - Create another route /sign-in . This route need return token for user
-    - In route /account you need to provide token as header and verify it in middleware that check is token valid.
-    - Examples:
-        - https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs
-        - https://jsramblings.com/authentication-with-node-and-jwt-a-simple-example/
-        - https://www.section.io/engineering-education/how-to-build-authentication-api-with-jwt-token-in-nodejs/
-
+1. Install mongodb locally on your machine. https://www.mongodb.com/home
+2. Install GUI (MongoDB Compass or Robo3T, or any another. Based on your preferences)
+3. In your express application create connection to mongo. Connection need to be inside
+ config/mongoConnection.js. All operations with database need to be with Mongoose https://mongoosejs.com/.
+4. Add events when mongo connected: 'connected', 'error', 'open'. And add logger on this events.
+5. Create Schema for User inside your component in model.js. User need to have fields: email, firstName,
+ lastName, password. Email need to have unique index. Password need to be hashed with bcrypt. You can use
+ Mongoose middleware pre('save').
+6. On your route /create (or another when you have create operation for user) you need to pass body
+ params with email, password, firstName, lastName. All this params need to be validated in controller.
+ User creation (Mongoose operation) need to be in Service.
