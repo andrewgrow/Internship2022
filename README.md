@@ -21,6 +21,6 @@
 5. Create Schema for User inside your component in model.js. User need to have fields: email, firstName,
  lastName, password. Email need to have unique index. Password need to be hashed with bcrypt. You can use
  Mongoose middleware pre('save').
-6. On your route /create (or another when you have create operation for user) you need to pass body
+6. On your route /create (or another when you have created operation for user) you need to pass body
  params with email, password, firstName, lastName. All this params need to be validated in controller.
  User creation (Mongoose operation) need to be in Service.

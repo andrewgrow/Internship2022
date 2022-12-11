@@ -2,7 +2,7 @@ const express = require('express');
 const middleware = require('../config/middleware');
 const router = require('../config/router');
 const setupLoggers = require('../config/logger');
-const db = require('../database/db');
+const db = require('../config/mongoConnection');
 
 const app = express();
 
