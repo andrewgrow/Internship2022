@@ -21,7 +21,7 @@ function isPublicAccess(requestPath, method) {
 
 class Security {
     static generateJwtToken(userData) {
-        if (userData.password) userData.password = null;
+        if (userData.password) delete userData._doc.password;
 
         return jwt.sign(
             { userData },
