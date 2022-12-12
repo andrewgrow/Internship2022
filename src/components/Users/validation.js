@@ -2,18 +2,20 @@ const Joi = require('joi');
 const logger = require('intel').getLogger('Users|Validation');
 
 const schemaCreate = Joi.object({
-    /** username allows alphanumeric, not allows commas and allows all other punctuation.
-     * @see[https://regex101.com/r/1Q2EcU/2] */
-    username: Joi.string().regex(/^\s*\w+(?:[^\w,]+\w+)*[^,\w]*$/).min(3).max(50)
-        .required(),
-
-    email: Joi.string().email().lowercase().required(),
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    password: Joi.string().min(8).max(100).required(),
+    email: Joi.string().email().min(5).max(100).lowercase().required(),
 });
 
-// SchemaUpdate and SchemaSignIn are the same as SchemaCreate for current time.
+const schemaSignIn = Joi.object({
+    password: Joi.string().min(8).max(1024).required(),
+    email: Joi.string().email().min(5).max(500).lowercase().required(),
+});
+
+// 'schemaUpdate' is the same as 'schemaCreate' for current time.
 // May be changed in the future.
 const schemaUpdate = Object.assign(schemaCreate, {});
-const schemaSignIn = Object.assign(schemaCreate, {});
 
 function check(req, res, next, schema) {
     const validationResult = schema.validate(req.body);
