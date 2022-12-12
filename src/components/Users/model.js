@@ -38,18 +38,21 @@ const userSchema = new mongoose.Schema(userDescriptionObject);
 /**
  * Middleware that will be called before save.
  */
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async (next) => {
     const user = this;
+
     if (!user.isModified('password')) return next();
     user.password = await bcrypt.hash(user.password, 8);
     logger.debug('try to save user!', user);
-    next();
+
+    return next();
 });
 
 /**
  * Middleware that will be called after save.
  */
-userSchema.post('save', function(doc, next) {
+/* eslint-disable no-param-reassign */
+userSchema.post('save', (doc, next) => {
     delete doc._doc.password;
     next();
 });

@@ -41,6 +41,7 @@ async function destroy(req, res) {
     try {
         const user = Security.getDataFromAuthToken(req).userData;
         const result = await UsersService.destroy(user);
+
         return res.status(200).json({
             data: result,
         });

@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
-const { User } = require('../components/Users/model');
 const logger = require('intel').getLogger('Security|Class');
+const { User } = require('../components/Users/model');
 
 const config = {
     secretKey: process.env.SECRET_KEY,
@@ -11,6 +11,7 @@ const config = {
 };
 
 const publicPages = new Map();
+
 publicPages.set('/', 'GET');
 publicPages.set('/favicon.ico', 'GET');
 publicPages.set('/users', 'POST');
@@ -21,6 +22,7 @@ function isPublicAccess(requestPath, method) {
 }
 
 class Security {
+    /* eslint-disable no-param-reassign */
     static generateJwtToken(userData) {
         if (userData.password) delete userData._doc.password;
 
@@ -39,6 +41,7 @@ class Security {
                     const data = this.getDataFromAuthToken(req);
                     const dataUser = data.userData;
                     const user = await User.findById(dataUser._id);
+
                     if (user === null) {
                         throw new Error('User from JWT not valid!');
                     }
@@ -77,13 +80,16 @@ class Security {
 
     static async isEncryptedPasswordMatch(encryptedPassword, plainTextPassword) {
         const result = await bcrypt.compare(plainTextPassword, encryptedPassword);
+
         return result;
     }
 
     static getDataFromAuthToken(req) {
         const token = (req.headers.authorization || '').replace(/^Bearer /, '');
         const data = jwt.verify(token, Security.getPublicKey());
+
         logger.info('jwt decoded data:', data);
+
         return data;
     }
 }

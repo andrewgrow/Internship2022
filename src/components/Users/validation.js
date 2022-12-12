@@ -1,7 +1,8 @@
 const Joi = require('joi');
 const logger = require('intel').getLogger('Users|Validation');
 
-const emailConfig = Joi.string().email().min(5).max(100).lowercase();
+const emailConfig = Joi.string().email().min(5).max(100)
+    .lowercase();
 const passwordConfig = Joi.string().min(8).max(1024);
 const firstNameConfig = Joi.string().min(2).max(20);
 const lastNameConfig = Joi.string().min(2).max(20);

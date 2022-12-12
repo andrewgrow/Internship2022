@@ -9,10 +9,12 @@ async function signIn(req, res) {
 
     try {
         const user = await User.findOne({ email: data.email });
+
         if (user === null) {
             throw new Error('Email is not registered. Try create user!');
         }
         const isPasswordMatch = await Security.isEncryptedPasswordMatch(user.password, data.password);
+
         if (isPasswordMatch) {
             const jwtData = Security.generateJwtToken(user);
 
@@ -20,11 +22,11 @@ async function signIn(req, res) {
                 message: "Authorization successful. Use 'Authorization: Bearer $jwt_data' for your request headers.",
                 jwt_data: jwtData,
             });
-        } else {
-            throw new Error('Password is wrong!');
         }
+        throw new Error('Password is wrong!');
     } catch (error) {
         logger.error(error);
+
         return res.status(403).json({ error: error.message });
     }
 }

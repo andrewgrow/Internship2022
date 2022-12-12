@@ -30,5 +30,6 @@ module.exports = {
                 next: 'return',
             },
         ],
+        'no-underscore-dangle': ['error', { allow: ['_doc', '_id'] }],
     },
 };
