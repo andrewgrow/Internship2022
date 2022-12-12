@@ -1,21 +1,28 @@
 const Joi = require('joi');
 const logger = require('intel').getLogger('Users|Validation');
 
+const emailConfig = Joi.string().email().min(5).max(100).lowercase().required();
+const passwordConfig = Joi.string().min(8).max(1024).required();
+const firstNameConfig = Joi.string();
+const lastNameConfig = Joi.string();
+
 const schemaCreate = Joi.object({
-    firstName: Joi.string(),
-    lastName: Joi.string(),
-    password: Joi.string().min(8).max(100).required(),
-    email: Joi.string().email().min(5).max(100).lowercase().required(),
+    firstName: firstNameConfig,
+    lastName: lastNameConfig,
+    email: emailConfig,
+    password: passwordConfig,
 });
 
 const schemaSignIn = Joi.object({
-    password: Joi.string().min(8).max(1024).required(),
-    email: Joi.string().email().min(5).max(500).lowercase().required(),
+    email: emailConfig,
+    password: passwordConfig,
 });
 
-// 'schemaUpdate' is the same as 'schemaCreate' for current time.
-// May be changed in the future.
-const schemaUpdate = Object.assign(schemaCreate, {});
+const schemaUpdate = Joi.object({
+    firstName: firstNameConfig,
+    lastName: lastNameConfig,
+    email: emailConfig,
+});
 
 function check(req, res, next, schema) {
     const validationResult = schema.validate(req.body);

@@ -8,7 +8,7 @@ const userDescriptionObject = {
         required: [true, 'Please enter an email'],
         lowercase: true,
         minlength: 5,
-        maxLength: 500,
+        maxLength: 100,
     },
     firstName: 'string',
     lastName: 'string',
