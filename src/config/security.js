@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const fs = require('fs');
+const bcrypt = require('bcrypt');
 const logger = require('intel').getLogger('Security|Class');
 
 const config = {
@@ -70,6 +71,11 @@ class Security {
         }
 
         return fs.readFileSync(publicKeyPath, 'utf8');
+    }
+
+    static async isEncryptedPasswordMatch(encryptedPassword, plainTextPassword) {
+        const result = await bcrypt.compare(plainTextPassword, encryptedPassword);
+        return result;
     }
 }
 
