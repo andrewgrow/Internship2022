@@ -1,26 +1,35 @@
 const logger = require('intel').getLogger('Users|service');
 const { User } = require('./model');
 
-function patch(userId) {
-    if (Number.isNaN(userId)) throw new Error('UserId must be a number');
-    const resultMessage = `User ${userId} patched successful.`;
+async function patch(user, data) {
+    const userDb = await User.findById(user._id);
+    if (userDb === null) {
+        throw new Error(`User with id ${user._id} not found for patching!`);
+    }
+    if (data.firstName) {
+        userDb.firstName = data.firstName;
+    }
+    if (data.lastName) {
+        userDb.lastName = data.lastName;
+    }
+    if (data.email) {
+        userDb.email = data.email;
+    }
+    if (data.password) {
+        userDb.password = data.password;
+    }
 
-    logger.info(resultMessage);
-
-    return {
-        message: resultMessage,
-    };
+    const result = await userDb.save();
+    return result;
 }
 
-function find(userId) {
-    if (Number.isNaN(userId)) throw new Error('UserId must be a number');
-    const resultMessage = `Found user with id ${userId}`;
-
-    logger.info(resultMessage);
-
-    return {
-        message: resultMessage,
-    };
+async function find(user) {
+    const result = await User.findById(user._id);
+    if (result === null) {
+        throw new Error(`User with id ${user._id} not found!`);
+    }
+    delete result._doc.password;
+    return result;
 }
 
 async function destroy(user) {

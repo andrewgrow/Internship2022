@@ -50,7 +50,7 @@ userSchema.pre('save', async function (next) {
  * Middleware that will be called after save.
  */
 userSchema.post('save', function(doc, next) {
-    doc.password = '[encrypted]';
+    delete doc._doc.password;
     next();
 });
 

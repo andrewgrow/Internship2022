@@ -21,10 +21,11 @@ async function create(req, res) {
 
 async function find(req, res) {
     try {
-        const user = await UsersService.find(+req.params.id);
+        const user = Security.getDataFromAuthToken(req).userData;
+        const result = await UsersService.find(user);
 
         return res.status(200).json({
-            data: user,
+            data: result,
         });
     } catch (error) {
         logger.error(error);
@@ -39,15 +40,10 @@ async function find(req, res) {
 async function destroy(req, res) {
     try {
         const user = Security.getDataFromAuthToken(req).userData;
-
-        if (user) {
-            const result = await UsersService.destroy(user);
-            return res.status(200).json({
-                data: result,
-            });
-        } else {
-            throw new Error('Wrong JWT data');
-        }
+        const result = await UsersService.destroy(user);
+        return res.status(200).json({
+            data: result,
+        });
     } catch (error) {
         logger.error(error);
 
@@ -60,10 +56,11 @@ async function destroy(req, res) {
 
 async function patch(req, res) {
     try {
-        const user = await UsersService.patch(+req.params.id);
+        const user = Security.getDataFromAuthToken(req).userData;
+        const result = await UsersService.patch(user, req.body);
 
         return res.status(200).json({
-            data: user,
+            data: result,
         });
     } catch (error) {
         logger.error(error);

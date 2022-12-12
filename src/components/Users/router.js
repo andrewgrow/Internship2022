@@ -13,9 +13,9 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/:id', UsersComponent.find); // GET http://localhost:3000/users/1
+router.get('/', UsersComponent.find); // GET http://localhost:3000/users
 router.post('/', validation.validateCreate, UsersComponent.create); // POST http://localhost:3000/users
-router.patch('/:id', validation.validatePatch, UsersComponent.patch); // PATCH http://localhost:3000/users/1
-router.delete('/', UsersComponent.destroy); // DELETE http://localhost:3000/users/
+router.patch('/', validation.validatePatch, UsersComponent.patch); // PATCH http://localhost:3000/users
+router.delete('/', UsersComponent.destroy); // DELETE http://localhost:3000/users
 
 module.exports = router;
