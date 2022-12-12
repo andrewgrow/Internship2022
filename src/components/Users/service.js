@@ -1,4 +1,5 @@
 const logger = require('intel').getLogger('Users|service');
+const { User } = require('./model');
 
 function patch(userId) {
     if (Number.isNaN(userId)) throw new Error('UserId must be a number');
@@ -33,14 +34,19 @@ function destroy(userId) {
     };
 }
 
-function create() {
-    const resultMessage = 'User created successful';
-
-    logger.info(resultMessage);
-
-    return {
-        message: 'User created successful',
-    };
+async function create(dataTransferObject) {
+    try {
+        const user = new User(dataTransferObject);
+        await user.validate(); // if validation false will throw error
+        const result = await user.save();
+        logger.info('User created successful. Data:', result);
+        return result;
+    } catch (error) {
+        if (error.code === 11000) {
+            error.message = 'Your email already registered. Try to login with it.'
+        }
+        throw error;
+    }
 }
 
 module.exports = {

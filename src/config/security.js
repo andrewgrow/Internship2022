@@ -8,14 +8,20 @@ const config = {
     jwtExpiration: 3600, // 3600 is 1 hour
 };
 
-const publicPages = ['/', '/favicon.ico', '/sign_in'];
+const publicPages = new Map();
+publicPages.set('/', 'GET');
+publicPages.set('/favicon.ico', 'GET');
+publicPages.set('/users', 'POST');
+publicPages.set('/sign_in', 'POST');
 
-function isPublicAccess(requestPath) {
-    return publicPages.includes(requestPath);
+function isPublicAccess(requestPath, method) {
+    return publicPages.has(requestPath) && publicPages.get(requestPath) === method;
 }
 
 class Security {
     static generateJwtToken(userData) {
+        if (userData.password) userData.password = null;
+
         return jwt.sign(
             { userData },
             Security.getPrivateKey(),
@@ -25,7 +31,7 @@ class Security {
 
     static jwtVerification() {
         return (req, res, next) => {
-            if (!isPublicAccess(req.path)) {
+            if (!isPublicAccess(req.path, req.method)) {
                 try {
                     const token = (req.headers.authorization || '').replace(/^Bearer /, '');
 

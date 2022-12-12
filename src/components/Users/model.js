@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const logger = require('intel').getLogger('User|Model');
 
 const userDescriptionObject = {
     email: {
@@ -10,8 +12,18 @@ const userDescriptionObject = {
         minlength: 5,
         maxLength: 100,
     },
-    firstName: 'string',
-    lastName: 'string',
+    firstName: {
+        type: String,
+        required: [true, 'Please enter a first name'],
+        minlength: 2,
+        maxLength: 20,
+    },
+    lastName: {
+        type: String,
+        required: [true, 'Please enter a last name'],
+        minlength: 2,
+        maxLength: 20,
+    },
     password: {
         type: String,
         required: [true, 'Please enter a password'],
@@ -22,6 +34,25 @@ const userDescriptionObject = {
 };
 
 const userSchema = new mongoose.Schema(userDescriptionObject);
+
+/**
+ * Middleware that will be called before save.
+ */
+userSchema.pre('save', async function (next) {
+    const user = this;
+    if (!user.isModified('password')) return next();
+    user.password = await bcrypt.hash(user.password, 8);
+    logger.debug('try to save user!', user);
+    next();
+});
+
+/**
+ * Middleware that will be called after save.
+ */
+userSchema.post('save', function(doc, next) {
+    doc.password = '[encrypted]';
+    next();
+});
 
 const User = mongoose.model('User', userSchema);
 

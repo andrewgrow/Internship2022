@@ -3,8 +3,8 @@ const logger = require('intel').getLogger('Users|Validation');
 
 const emailConfig = Joi.string().email().min(5).max(100).lowercase().required();
 const passwordConfig = Joi.string().min(8).max(1024).required();
-const firstNameConfig = Joi.string();
-const lastNameConfig = Joi.string();
+const firstNameConfig = Joi.string().min(2).max(20).required();
+const lastNameConfig = Joi.string().min(2).max(20).required();
 
 const schemaCreate = Joi.object({
     firstName: firstNameConfig,
