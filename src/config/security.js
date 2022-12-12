@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
+const { User } = require('../components/Users/model');
 const logger = require('intel').getLogger('Security|Class');
 
 const config = {
@@ -31,15 +32,16 @@ class Security {
     }
 
     static jwtVerification() {
-        return (req, res, next) => {
+        return async (req, res, next) => {
             if (!isPublicAccess(req.path, req.method)) {
                 try {
-                    const token = (req.headers.authorization || '').replace(/^Bearer /, '');
-
                     logger.debug(req.headers);
-                    const data = jwt.verify(token, Security.getPublicKey());
-
-                    logger.info('jwt decoded data:', data);
+                    const data = this.getDataFromAuthToken(req);
+                    const dataUser = data.userData;
+                    const user = await User.findById(dataUser._id);
+                    if (user === null) {
+                        throw new Error('User from JWT not valid!');
+                    }
                 } catch (err) {
                     return res.status(401).json({ error: err.message });
                 }
@@ -76,6 +78,13 @@ class Security {
     static async isEncryptedPasswordMatch(encryptedPassword, plainTextPassword) {
         const result = await bcrypt.compare(plainTextPassword, encryptedPassword);
         return result;
+    }
+
+    static getDataFromAuthToken(req) {
+        const token = (req.headers.authorization || '').replace(/^Bearer /, '');
+        const data = jwt.verify(token, Security.getPublicKey());
+        logger.info('jwt decoded data:', data);
+        return data;
     }
 }
 

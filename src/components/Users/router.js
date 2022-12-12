@@ -16,6 +16,6 @@ router.use((req, res, next) => {
 router.get('/:id', UsersComponent.find); // GET http://localhost:3000/users/1
 router.post('/', validation.validateCreate, UsersComponent.create); // POST http://localhost:3000/users
 router.patch('/:id', validation.validatePatch, UsersComponent.patch); // PATCH http://localhost:3000/users/1
-router.delete('/:id', UsersComponent.destroy); // DELETE http://localhost:3000/users/1
+router.delete('/', UsersComponent.destroy); // DELETE http://localhost:3000/users/
 
 module.exports = router;

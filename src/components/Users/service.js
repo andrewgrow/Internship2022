@@ -23,14 +23,16 @@ function find(userId) {
     };
 }
 
-function destroy(userId) {
-    if (Number.isNaN(userId)) throw new Error('UserId must be a number');
-    const resultMessage = `Deleted user with id ${userId}`;
+async function destroy(user) {
+    const result = await User.findByIdAndDelete(user._id);
+    if (result === null) {
+        throw new Error('User account not found for deleting!');
+    }
 
-    logger.info(resultMessage);
+    logger.debug('User destroyed!', result);
 
     return {
-        message: `Deleted user with id ${userId}`,
+        message: `Your account has been deleted. Good bye!`,
     };
 }
 

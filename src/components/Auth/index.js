@@ -10,7 +10,7 @@ async function signIn(req, res) {
     try {
         const user = await User.findOne({ email: data.email });
         if (user === null) {
-            throw new Error('Email is wrong!');
+            throw new Error('Email is not registered. Try create user!');
         }
         const isPasswordMatch = await Security.isEncryptedPasswordMatch(user.password, data.password);
         if (isPasswordMatch) {

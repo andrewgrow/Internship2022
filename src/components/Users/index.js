@@ -1,5 +1,6 @@
 const logger = require('intel').getLogger('Users|Controller');
 const UsersService = require('./service');
+const Security = require('../../config/security');
 
 async function create(req, res) {
     try {
@@ -37,11 +38,16 @@ async function find(req, res) {
 
 async function destroy(req, res) {
     try {
-        const user = await UsersService.destroy(+req.params.id);
+        const user = Security.getDataFromAuthToken(req).userData;
 
-        return res.status(200).json({
-            data: user,
-        });
+        if (user) {
+            const result = await UsersService.destroy(user);
+            return res.status(200).json({
+                data: result,
+            });
+        } else {
+            throw new Error('Wrong JWT data');
+        }
     } catch (error) {
         logger.error(error);
 
