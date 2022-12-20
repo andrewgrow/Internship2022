@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema(userDescriptionObject);
 /**
  * Middleware that will be called before save.
  */
-userSchema.pre('save', async (next) => {
+userSchema.pre('save', async function preSave(next) {
     const user = this;
 
     if (!user.isModified('password')) return next();
