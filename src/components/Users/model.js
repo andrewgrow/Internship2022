@@ -30,7 +30,7 @@ const userDescriptionObject = {
         minlength: 8,
         maxLength: 1024,
     },
-    created_at: { type: Date, default: Date.now },
+    createdAt: { type: Date, default: Date.now },
 };
 
 const userSchema = new mongoose.Schema(userDescriptionObject);

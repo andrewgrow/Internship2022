@@ -3,23 +3,17 @@ const TasksService = require('./service');
 const Security = require('../../config/security');
 
 async function create(req, res) {
-    // try {
-    //     const createdUser = await TasksService.create(req.body);
-    //
-    //     return res.status(201).json({
-    //         data: createdUser,
-    //     });
-    // } catch (error) {
-    //     logger.error(error);
-    //
-    //     return res.status(500).json({
-    //         error: error.message,
-    //         details: null,
-    //     });
-    // }
-    return res.status(201).json({
-        data: 'a task has been created',
-    });
+    try {
+        const createdTask = await TasksService.create(req.body);
+
+        return res.status(201).json({
+            data: createdTask,
+        });
+    } catch (error) {
+        return res.status(422).json({
+            error: error.message,
+        });
+    }
 }
 
 async function get(req, res) {

@@ -7,7 +7,7 @@ const { User } = require('../components/Users/model');
 
 const config = {
     secretKey: process.env.SECRET_KEY,
-    jwtExpiration: 3600, // 3600 is 1 hour
+    jwtExpiration: 60 * 60 * 24 * 365, // Seconds. 3600 is 1 hour.
 };
 
 const publicPages = new Map();
