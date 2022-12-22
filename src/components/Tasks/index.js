@@ -18,6 +18,7 @@ async function create(req, res) {
 }
 
 async function get(req, res) {
+    // get 5 tasks
     // try {
     //     const user = Security.getDataFromAuthToken(req).userData;
     //     const result = await TasksService.find(user);
@@ -60,24 +61,19 @@ async function getAll(req, res) {
 }
 
 async function destroy(req, res) {
-    // try {
-    //     const user = Security.getDataFromAuthToken(req).userData;
-    //     const result = await TasksService.destroy(user);
-    //
-    //     return res.status(200).json({
-    //         data: result,
-    //     });
-    // } catch (error) {
-    //     logger.error(error);
-    //
-    //     return res.status(500).json({
-    //         error: error.message,
-    //         details: null,
-    //     });
-    // }
-    return res.status(200).json({
-        data: 'the task has been destroyed',
-    });
+    try {
+        const result = await TasksService.destroy(req.params.id);
+
+        return res.status(200).json({
+            data: result,
+        });
+    } catch (error) {
+        logger.error(error);
+
+        return res.status(500).json({
+            error: error.message
+        });
+    }
 }
 
 async function patch(req, res) {

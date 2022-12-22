@@ -13,10 +13,10 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/:id', TasksComponent.get); // GET http://localhost:3000/v1/task/:id getting some task
-router.get('/', TasksComponent.getAll); // GET http://localhost:3000/v1/task getting all tasks
+router.get('/all', TasksComponent.getAll); // GET http://localhost:3000/v1/task/all getting all tasks
+router.get('/', validation.validatePage, TasksComponent.get); // GET http://localhost:3000/v1/task/ getting some 5 tasks
 router.post('/', TasksComponent.create); // POST http://localhost:3000/v1/task create one or bulk tasks
 router.patch('/:id', validation.validatePatch, TasksComponent.patch); // PATCH http://localhost:3000/v1/task
-router.delete('/:id', TasksComponent.destroy); // DELETE http://localhost:3000/v1/task
+router.delete('/:id', validation.validateDestroy, TasksComponent.destroy); // DELETE http://localhost:3000/v1/task
 
 module.exports = router;

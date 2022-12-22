@@ -52,17 +52,17 @@ async function find(id) {
 }
 
 async function destroy(id) {
-    // const result = await User.findByIdAndDelete(user._id);
-    //
-    // if (result === null) {
-    //     throw new Error('User account not found for deleting!');
-    // }
-    //
-    // logger.debug('User destroyed!', result);
-    //
-    // return {
-    //     message: 'Your account has been deleted. Good bye!',
-    // };
+    const result = await Task.findByIdAndDelete(id);
+
+    if (result === null) {
+        throw new Error('Task not found for deleting!');
+    }
+
+    logger.debug('Task destroyed!', result);
+
+    return {
+        message: `Task with id ${id} has been deleted.`,
+    };
 }
 
 module.exports = {
