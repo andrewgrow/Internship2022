@@ -81,24 +81,20 @@ async function destroy(req, res) {
 }
 
 async function patch(req, res) {
-    // try {
-    //     const user = Security.getDataFromAuthToken(req).userData;
-    //     const result = await TasksService.patch(user, req.body);
-    //
-    //     return res.status(200).json({
-    //         data: result,
-    //     });
-    // } catch (error) {
-    //     logger.error(error);
-    //
-    //     return res.status(500).json({
-    //         error: error.message,
-    //         details: null,
-    //     });
-    // }
-    return res.status(200).json({
-        data: 'the task has been patched',
-    });
+    try {
+        const result = await TasksService.patch(req.params.id, req.body);
+
+        return res.status(200).json({
+            data: result,
+        });
+    } catch (error) {
+        logger.error(error);
+
+        return res.status(500).json({
+            error: error.message,
+            details: null,
+        });
+    }
 }
 
 module.exports = {

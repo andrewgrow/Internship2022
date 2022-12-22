@@ -19,28 +19,25 @@ async function create(user, dataTransferObject) {
         throw error;
     }
 }
-async function patch(task, data) {
-    // const userDb = await User.findById(user._id);
-    //
-    // if (userDb === null) {
-    //     throw new Error(`User with id ${user._id} not found for patching!`);
-    // }
-    // if (data.firstName) {
-    //     userDb.firstName = data.firstName;
-    // }
-    // if (data.lastName) {
-    //     userDb.lastName = data.lastName;
-    // }
-    // if (data.email) {
-    //     userDb.email = data.email;
-    // }
-    // if (data.password) {
-    //     userDb.password = data.password;
-    // }
-    //
-    // const result = await userDb.save();
-    //
-    // return result;
+async function patch(id, data) {
+    try {
+        const taskDb = await Task.findById(id);
+
+        if (taskDb === null) {
+            throw new Error(`Task with id ${id} not found for patching!`);
+        }
+        taskDb.estimatedTime = data.estimatedTime;
+        await taskDb.validate(); // if validation false will throw error
+
+        const result = await taskDb.save();
+
+        logger.info('Task patched successful. Data:', result);
+
+        return result;
+    } catch (error) {
+        logger.error('Task patching error:', error);
+        throw error;
+    }
 }
 
 async function find(id) {
