@@ -1,5 +1,6 @@
 const logger = require('intel').getLogger('Tasks|Service');
 const { Task } = require('./model');
+const limitPerPage = 5;
 
 async function create(user, dataTransferObject) {
     try {
@@ -40,15 +41,14 @@ async function patch(id, data) {
     }
 }
 
-async function find(id) {
-    // const result = await User.findById(user._id);
-    //
-    // if (result === null) {
-    //     throw new Error(`User with id ${user._id} not found!`);
-    // }
-    // delete result._doc.password;
-    //
-    // return result;
+async function getUserTasksPerPage(userId, page) {
+    const tasks = await Task.where('assignee', userId).limit(limitPerPage).skip(page * limitPerPage);
+    const count = await Task.where('assignee', userId).count();
+
+    return {
+        tasks: tasks,
+        totalTasks: count,
+    }
 }
 
 async function destroy(id) {
@@ -67,7 +67,7 @@ async function destroy(id) {
 
 module.exports = {
     create,
-    find,
+    getUserTasksPerPage,
     destroy,
     patch,
 };

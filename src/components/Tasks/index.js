@@ -17,26 +17,20 @@ async function create(req, res) {
     }
 }
 
-async function get(req, res) {
-    // get 5 tasks
-    // try {
-    //     const user = Security.getDataFromAuthToken(req).userData;
-    //     const result = await TasksService.find(user);
-    //
-    //     return res.status(200).json({
-    //         data: result,
-    //     });
-    // } catch (error) {
-    //     logger.error(error);
-    //
-    //     return res.status(500).json({
-    //         error: error.message,
-    //         details: null,
-    //     });
-    // }
-    return res.status(200).json({
-        data: 'the task has been found',
-    });
+async function getTasksPerPage(req, res) {
+    try {
+        const userId = Security.getDataFromAuthToken(req).userData._id;
+        const page = req.query.page ?? 0;
+        const result = await TasksService.getUserTasksPerPage(userId, page);
+
+        return res.status(200).json({ data: result });
+    } catch (error) {
+        logger.error(error);
+
+        return res.status(500).json({
+            error: error.message
+        });
+    }
 }
 
 async function getAll(req, res) {
@@ -95,7 +89,7 @@ async function patch(req, res) {
 
 module.exports = {
     create,
-    get,
+    getTasksPerPage,
     getAll,
     destroy,
     patch,

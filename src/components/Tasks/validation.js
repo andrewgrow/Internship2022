@@ -3,7 +3,7 @@ const logger = require('intel').getLogger('Tasks|Validation');
 
 const taskId = Joi.string().alphanum().length(24).lowercase().required();
 const estimatedTime = Joi.number().positive().min(1).max(40).required();
-const pageRequest = Joi.number().positive().min(0).max(40);
+const pageRequest = Joi.number().min(0).max(100);
 
 const schemaUpdate = Joi.object({
     id: taskId,
