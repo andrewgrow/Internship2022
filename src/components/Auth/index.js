@@ -21,6 +21,7 @@ async function signIn(req, res) {
             return res.status(200).json({
                 message: "Authorization successful. Use 'Authorization: Bearer $jwt_data' for your request headers.",
                 jwt_data: jwtData,
+                id: user._id,
             });
         }
         throw new Error('Password is wrong!');
