@@ -1,9 +1,12 @@
 const logger = require('intel').getLogger('Tasks|Service');
 const { Task } = require('./model');
 
-async function create(dataTransferObject) {
+async function create(user, dataTransferObject) {
     try {
         const task = new Task(dataTransferObject);
+
+        // Note: this is a magic method that will be generated task by itself!
+        task.setDefaultValues(user._id);
 
         await task.validate(); // if validation false will throw error
         const result = await task.save();

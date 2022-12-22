@@ -4,7 +4,8 @@ const Security = require('../../config/security');
 
 async function create(req, res) {
     try {
-        const createdTask = await TasksService.create(req.body);
+        const user = Security.getDataFromAuthToken(req).userData;
+        const createdTask = await TasksService.create(user, req.body);
 
         return res.status(201).json({
             data: createdTask,
