@@ -51,6 +51,34 @@ async function getUserTasksPerPage(userId, page) {
     }
 }
 
+async function getAllUserTasks(user) {
+    const tasks = await Task.aggregate([
+        {
+            $match: { assignee: user._id }
+        },
+        {
+            $sort: { estimatedTime: -1 }
+        }
+    ]);
+    const counting = await Task.aggregate([
+        {
+            $match: { assignee: user._id }
+        },
+        {
+            $group: { "_id" : "$assignee",
+                "count": { "$sum": 1 },
+                "totalEstimate": { "$sum": "$estimatedTime" },
+            }
+        }
+    ]);
+    return {
+        tasks: tasks,
+        name: user.firstName + " " + user.lastName,
+        totalTasks: counting[0].count,
+        totalEstimation: counting[0].totalEstimate,
+    };
+}
+
 async function destroy(id) {
     const result = await Task.findByIdAndDelete(id);
 
@@ -68,6 +96,7 @@ async function destroy(id) {
 module.exports = {
     create,
     getUserTasksPerPage,
+    getAllUserTasks,
     destroy,
     patch,
 };

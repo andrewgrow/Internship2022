@@ -34,24 +34,19 @@ async function getTasksPerPage(req, res) {
 }
 
 async function getAll(req, res) {
-    // try {
-    //     const user = Security.getDataFromAuthToken(req).userData;
-    //     const result = await TasksService.find(user);
-    //
-    //     return res.status(200).json({
-    //         data: result,
-    //     });
-    // } catch (error) {
-    //     logger.error(error);
-    //
-    //     return res.status(500).json({
-    //         error: error.message,
-    //         details: null,
-    //     });
-    // }
-    return res.status(200).json({
-        data: 'the tasks have been found',
-    });
+    try {
+        const user = Security.getDataFromAuthToken(req).userData;
+        const result = await TasksService.getAllUserTasks(user);
+
+        return res.status(200).json({ data: result });
+    } catch (error) {
+        logger.error(error);
+
+        return res.status(500).json({
+            error: error.message
+        });
+    }
+
 }
 
 async function destroy(req, res) {
