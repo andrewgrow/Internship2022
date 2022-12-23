@@ -1,7 +1,8 @@
 const logger = require('intel').getLogger('Tasks|Service');
+const mongoose = require('mongoose');
 const { Task } = require('./model');
 const { User } = require('../Users/model');
-const mongoose = require('mongoose');
+
 const limitPerPage = 5;
 
 async function create(user, dataTransferObject) {
@@ -48,46 +49,46 @@ async function getUserTasksPerPage(userId, page) {
     const count = await Task.where('assignee', userId).count();
 
     return {
-        tasks: tasks,
+        tasks,
         totalTasks: count,
-    }
+    };
 }
 
 async function getAllUserTasks(user) {
     const tasks = await User.aggregate([
         {
             $match: {
-                "_id" : new mongoose.Types.ObjectId(user._id)
+                _id: new mongoose.Types.ObjectId(user._id),
             },
         },
         {
             $addFields: {
-                "id": "$_id",
-                "userName": { $concat: ["$firstName", " ", "$lastName", ] }
+                id: '$_id',
+                userName: { $concat: ['$firstName', ' ', '$lastName'] },
             },
         },
         {
             $lookup: {
-                from: "tasks",
-                localField: "assignee",
-                foreignField: "id",
-                as: "tasks"
-            }
+                from: 'tasks',
+                localField: 'assignee',
+                foreignField: 'id',
+                as: 'tasks',
+            },
         },
         {
             $unwind: {
-                path: "$tasks"
-            }
+                path: '$tasks',
+            },
         },
         {
             $group: {
-                "_id" : "$_id",
-                "count": { $sum : 1 },
-                "totalEstimate": { $sum : "$tasks.estimatedTime" },
-                "tasks": { $push: "$tasks" },
-                "name": { $first: "$userName" }
-            }
-        }
+                _id: '$_id',
+                count: { $sum: 1 },
+                totalEstimate: { $sum: '$tasks.estimatedTime' },
+                tasks: { $push: '$tasks' },
+                name: { $first: '$userName' },
+            },
+        },
     ]);
 
     return tasks;

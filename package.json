@@ -25,10 +25,10 @@
         "jsonwebtoken": "8.5.1",
         "logrotate-stream": "0.2.8",
         "mongoose": "6.7.5",
-        "morgan": "1.10.0"
+        "morgan": "1.10.0",
+        "@faker-js/faker": "7.6.0"
     },
     "devDependencies": {
-        "@faker-js/faker": "7.6.0",
         "commitizen": "4.2.5",
         "nodemon": "2.0.20"
     },

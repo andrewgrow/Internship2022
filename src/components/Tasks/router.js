@@ -14,7 +14,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/all', TasksComponent.getAll); // GET http://localhost:3000/v1/task/all getting all tasks
-router.get('/', validation.validatePage, TasksComponent.getTasksPerPage); // GET http://localhost:3000/v1/task/ getting some tasks
+router.get('/', validation.validatePage, TasksComponent.getTasksPerPage); // GET http://localhost:3000/v1/task/
 router.post('/', TasksComponent.create); // POST http://localhost:3000/v1/task create one or bulk tasks
 router.patch('/:id', validation.validatePatch, TasksComponent.patch); // PATCH http://localhost:3000/v1/task
 router.delete('/:id', validation.validateDestroy, TasksComponent.destroy); // DELETE http://localhost:3000/v1/task

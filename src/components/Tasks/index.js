@@ -28,7 +28,7 @@ async function getTasksPerPage(req, res) {
         logger.error(error);
 
         return res.status(500).json({
-            error: error.message
+            error: error.message,
         });
     }
 }
@@ -43,10 +43,9 @@ async function getAll(req, res) {
         logger.error(error);
 
         return res.status(500).json({
-            error: error.message
+            error: error.message,
         });
     }
-
 }
 
 async function destroy(req, res) {
@@ -60,7 +59,7 @@ async function destroy(req, res) {
         logger.error(error);
 
         return res.status(500).json({
-            error: error.message
+            error: error.message,
         });
     }
 }

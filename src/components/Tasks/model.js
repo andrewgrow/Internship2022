@@ -51,13 +51,13 @@ taskSchema.post('save', (doc, next) => {
  * A special method for generating random values of creating models.
  * @param assigneeUserId who will be assigned for this task
  */
-taskSchema.methods.setDefaultValues = function (assigneeUserId) {
+taskSchema.methods.setDefaultValues = function setDefaultValues(assigneeUserId) {
     this.assignee = this.assignee ?? assigneeUserId;
     this.createdBy = this.createdBy ?? faker.name.fullName();
-    this.title = this.title ?? `${faker.hacker.verb()} ${faker.hacker.noun()}`
+    this.title = this.title ?? `${faker.hacker.verb()} ${faker.hacker.noun()}`;
     this.description = this.description ?? faker.hacker.phrase();
-    this.estimatedTime = this.estimatedTime ?? faker.datatype.number({'min': 1, 'max': 40});
-}
+    this.estimatedTime = this.estimatedTime ?? faker.datatype.number({ min: 1, max: 40 });
+};
 
 const Task = mongoose.model('Task', taskSchema);
 
