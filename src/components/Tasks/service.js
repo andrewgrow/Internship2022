@@ -1,5 +1,7 @@
 const logger = require('intel').getLogger('Tasks|Service');
 const { Task } = require('./model');
+const { User } = require('../Users/model');
+const mongoose = require('mongoose');
 const limitPerPage = 5;
 
 async function create(user, dataTransferObject) {
@@ -52,31 +54,43 @@ async function getUserTasksPerPage(userId, page) {
 }
 
 async function getAllUserTasks(user) {
-    const tasks = await Task.aggregate([
+    const tasks = await User.aggregate([
         {
-            $match: { assignee: user._id }
+            $match: {
+                "_id" : new mongoose.Types.ObjectId(user._id)
+            },
         },
         {
-            $sort: { estimatedTime: -1 }
-        }
-    ]);
-    const counting = await Task.aggregate([
-        {
-            $match: { assignee: user._id }
+            $addFields: {
+                "id": "$_id",
+                "userName": { $concat: ["$firstName", " ", "$lastName", ] }
+            },
         },
         {
-            $group: { "_id" : "$assignee",
-                "count": { "$sum": 1 },
-                "totalEstimate": { "$sum": "$estimatedTime" },
+            $lookup: {
+                from: "tasks",
+                localField: "assignee",
+                foreignField: "id",
+                as: "tasks"
+            }
+        },
+        {
+            $unwind: {
+                path: "$tasks"
+            }
+        },
+        {
+            $group: {
+                "_id" : "$_id",
+                "count": { $sum : 1 },
+                "totalEstimate": { $sum : "$tasks.estimatedTime" },
+                "tasks": { $push: "$tasks" },
+                "name": { $first: "$userName" }
             }
         }
     ]);
-    return {
-        tasks: tasks,
-        name: user.firstName + " " + user.lastName,
-        totalTasks: counting[0].count,
-        totalEstimation: counting[0].totalEstimate,
-    };
+
+    return tasks;
 }
 
 async function destroy(id) {
