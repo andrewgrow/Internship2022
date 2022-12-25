@@ -13,7 +13,11 @@
 
 ### Week 1.5 task
 
-1. Create Migrations for tasks. Need to add status field. Tasks that have estimatedTime more than 10 need to be set in 'done', less than 10 or equal - 'in progress'. Migration "UP" will create this fields, please add "DOWN" that will erase this data. Npm library to use - https://www.npmjs.com/package/migrate-mongo. Also, don't forget to include status field in your Tasks mongoose Schema
+1. Create Migrations for tasks. Need to add status field. Tasks that have estimatedTime more than 10
+need to be set in 'done', less than 10 or equal - 'in progress'. Migration "UP" will create this fields, please
+add "DOWN" that will erase this data.
+Npm library to use - https://www.npmjs.com/package/migrate-mongo. Also, don't forget to include status field in your
+Tasks mongoose Schema
    Your schema with status:
 
 ```
