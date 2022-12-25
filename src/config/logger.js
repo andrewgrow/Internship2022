@@ -38,14 +38,16 @@ function getLogrotateStream(filename) {
  * Setup Morgan as logger for HTTP requests. Used as a middleware for node.js.
  */
 function enableMorganLogger(app) {
-    app.use(morgan('combined', {
-        stream: logrotate({
-            // output Morgan's log to file ./logs/access.log
-            file: path.join(config.path, 'access.log'),
-            size: config.size,
-            keep: config.keep,
-        }),
-    }));
+    if (app) {
+        app.use(morgan('combined', {
+            stream: logrotate({
+                // output Morgan's log to file ./logs/access.log
+                file: path.join(config.path, 'access.log'),
+                size: config.size,
+                keep: config.keep,
+            }),
+        }));
+    }
 }
 
 /**

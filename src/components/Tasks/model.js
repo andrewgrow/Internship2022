@@ -21,6 +21,12 @@ const taskDescriptionObject = {
         minlength: 5,
         maxLength: [200, 'Too long title. Can write more shortly?'],
     },
+    status: {
+        type: String,
+        required: [false],
+        minlength: 0,
+        maxLength: [20, 'Too long status. Can write more shortly?'],
+    },
     description: {
         type: String,
         required: false,
@@ -57,6 +63,7 @@ taskSchema.methods.setDefaultValues = function setDefaultValues(assigneeUserId) 
     this.title = this.title ?? `${faker.hacker.verb()} ${faker.hacker.noun()}`;
     this.description = this.description ?? faker.hacker.phrase();
     this.estimatedTime = this.estimatedTime ?? faker.datatype.number({ min: 1, max: 40 });
+    this.status = this.estimatedTime <= 10 ? 'done' : "in progress";
 };
 
 const Task = mongoose.model('Task', taskSchema);
