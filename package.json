@@ -9,7 +9,8 @@
         "commit": "cz",
         "lint": "npx eslint .",
         "lint:fix": "npx eslint . --fix",
-        "start": "npx nodemon app.js"
+        "start": "npx nodemon app.js",
+        "test": "npx mocha --exit"
     },
     "dependencies": {
         "bcrypt": "5.1.0",
@@ -26,11 +27,17 @@
         "logrotate-stream": "0.2.8",
         "mongoose": "6.7.5",
         "morgan": "1.10.0",
-        "@faker-js/faker": "7.6.0"
+        "@faker-js/faker": "7.6.0",
+        "chai": "4.3.7",
+        "chai-http": "4.3.0",
+        "swagger-ui-express": "4.6.0"
     },
     "devDependencies": {
         "commitizen": "4.2.5",
-        "nodemon": "2.0.20"
+        "nodemon": "2.0.20",
+        "mocha": "10.2.0",
+        "request": "2.88.2",
+        "supertest": "6.3.3"
     },
     "config": {
         "commitizen": {
