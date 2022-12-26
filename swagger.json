@@ -11,35 +11,143 @@
 },
     "host": "localhost:3000",
     "basePath": "/v1",
+    "securityDefinitions": {
+        "Authorization": {
+            "type": "apiKey",
+            "name": "authorization",
+            "in": "header",
+            "description": "JWT Token you can get it from http://localhost:3000/sign_in route. POST email and password."
+        }
+    },
     "tags": [{
-    "name": "Demo",
-    "description": "Demo description"
-}],
+        "name": "Task",
+        "description": "Working with tasks that have been assigned to the current user."
+    }],
     "paths": {
-    "/demo": {
-        "get": {
-            "tags": ["Demo"],
-                "summary": "Demo path",
+        "/task/all": {
+            "get": {
+                "security": [ { "Authorization": [] } ],
+                "tags": ["Task"],
+                "summary": "Working with tasks of users",
                 "responses": {
-                "200": {
-                    "description": "OK",
+                    "200": {
+                        "description": "Object contains data about all tasks of user",
                         "schema": {
-                        "$ref": "#/definitions/Demo"
+                            "$ref": "#/definitions/DataAllTasks"
+                        }
+                    }
+                }
+            }
+        },
+        "/task?page=0": {
+            "get": {
+                "security": [ { "Authorization": [] } ],
+                "tags": ["Task"],
+                "summary": "Get list of 5 tasks of the current user user.",
+                "parameters": [
+                    {
+                        "type": "number",
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page of results that have to be found.",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Object contains data about 5 tasks of user",
+                        "schema": {
+                            "$ref": "#/definitions/Data5Tasks"
+                        }
                     }
                 }
             }
         }
-    }
-},
+    },
     "definitions": {
-    "Demo": {
-        "properties": {
-            "testProperty": {
-                "type": "string"
+        "Task": {
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "title": "Current task's id."
+                },
+                "assignee": {
+                    "type": "string",
+                    "title": "Id of user that has been assigned to working with the task."
+                },
+                "title": {
+                    "type": "string",
+                    "title": "How this task is named."
+                },
+                "description": {
+                    "type": "string",
+                    "title": "Task described details."
+                },
+                "createdBy": {
+                    "type": "string",
+                    "title": "Name of the creator of this task."
+                },
+                "estimatedTime": {
+                    "type": "string",
+                    "title": "How many time is the task estimated."
+                },
+                "status": {
+                    "type": "string",
+                    "title": "Which status has this task. Can be 'done' or 'in progress'."
+                },
+                "createdAt": {
+                    "type": "object",
+                    "title": "Date of creating of the task"
+                },
+                "__v": {
+                    "type": "number",
+                    "title": "Current version of changed file."
+                }
+            }
+        },
+        "DataAllTasks" : {
+            "type": "object",
+            "title": "Data All Tasks",
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "title": "Current user's id."
+                },
+                "count" : {
+                    "type": "number",
+                    "title": "How many tasks the user has."
+                },
+                "totalEstimate": {
+                    "title": "How many estimated time the tasks contains.",
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string",
+                    "title": "The Full Name of the current user."
+                },
+                "tasks" : {
+                    "type": "array",
+                    "title": "A list of all user's tasks.",
+                    "$ref": "#/definitions/Task"
+                }
+            }
+        },
+        "Data5Tasks" : {
+            "type": "object",
+            "title": "Data 5 Tasks",
+            "properties": {
+                "totalTasks" : {
+                    "type": "number",
+                    "title": "How many tasks the user has totally."
+                },
+                "tasks": {
+                    "type": "array",
+                    "title": "A list of all user's tasks.",
+                    "$ref": "#/definitions/Task"
+                }
             }
         }
-    }
-},
+    },
     "schemes": ["http"],
     "consumes": ["application/json"],
     "produces": ["application/json"]
