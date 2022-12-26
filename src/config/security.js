@@ -10,14 +10,23 @@ const config = {
     jwtExpiration: 60 * 60 * 24 * 365, // Seconds. 3600 is 1 hour.
 };
 
+const swaggerRoutes = '/swagger-docs';
+
 const publicPages = new Map();
 
-publicPages.set('/', 'GET');
+publicPages.set('', 'GET');
 publicPages.set('/favicon.ico', 'GET');
 publicPages.set('/users', 'POST');
 publicPages.set('/sign_in', 'POST');
+publicPages.set(swaggerRoutes, 'GET');
 
 function isPublicAccess(requestPath, method) {
+    if (requestPath.endsWith("/")) {
+        requestPath = requestPath.slice(0, -1);
+    }
+    if (requestPath.startsWith(swaggerRoutes) && method === 'GET') {
+        return true;
+    }
     return publicPages.has(requestPath) && publicPages.get(requestPath) === method;
 }
 

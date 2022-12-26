@@ -9,8 +9,8 @@ const app = express();
 
 setupLoggers.init(app);
 middleware.init(app);
-router.init(app);
 swagger.init(app);
+router.init(app);
 /* eslint-disable no-console */
 db.init().catch((e) => console.error(e));
 app.set('port', process.env.PORT || 3000);
