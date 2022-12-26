@@ -62,6 +62,84 @@
                     }
                 }
             }
+        },
+        "/task/{id}": {
+            "patch": {
+                "security": [ { "Authorization": [] } ],
+                "tags": ["Task"],
+                "summary": "Patch task by its id.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "task id",
+                        "in": "path",
+                        "description": "Unique id of the task that has to be patched.",
+                        "required": true
+                    },
+                    {
+                        "name": "estimatedTime",
+                        "in": "body",
+                        "description": "New estimated time that has been set.",
+                        "schema": {
+                            "$ref": "#/definitions/PatchTask"
+                        }
+                    }
+                ],
+
+                "responses": {
+                    "200": {
+                        "description": "Task has been patched successful",
+                        "schema": {
+                            "$ref": "#/definitions/Task"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [ { "Authorization": [] } ],
+                "tags": ["Task"],
+                "summary": "Delete task by its id.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "task id",
+                        "in": "path",
+                        "description": "Unique id of the task that has to be deleted.",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task has been deleted successful"
+                    }
+                }
+            }
+        },
+        "/task" : {
+            "post": {
+                "security": [ { "Authorization": [] } ],
+                "tags": ["Task"],
+                "summary": "Create new task.",
+                "parameters": [
+                    {
+                        "name": "A described task",
+                        "in": "body",
+                        "description": "New task that has been created.",
+                        "schema": {
+                            "$ref": "#/definitions/CreateTask"
+                        }
+                    }
+                ],
+
+                "responses": {
+                    "201": {
+                        "description": "Task has been created successful",
+                        "schema": {
+                            "$ref": "#/definitions/Task"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -105,6 +183,34 @@
                 }
             }
         },
+        "CreateTask": {
+            "properties": {
+                "assignee": {
+                    "type": "string",
+                    "title": "Id of user that has been assigned to working with the task."
+                },
+                "title": {
+                    "type": "string",
+                    "title": "How this task is named."
+                },
+                "description": {
+                    "type": "string",
+                    "title": "Task described details."
+                },
+                "createdBy": {
+                    "type": "string",
+                    "title": "Name of the creator of this task."
+                },
+                "estimatedTime": {
+                    "type": "string",
+                    "title": "How many time is the task estimated."
+                },
+                "status": {
+                    "type": "string",
+                    "title": "Which status has this task. Can be 'done' or 'in progress'."
+                }
+            }
+        },
         "DataAllTasks" : {
             "type": "object",
             "title": "Data All Tasks",
@@ -144,6 +250,13 @@
                     "type": "array",
                     "title": "A list of all user's tasks.",
                     "$ref": "#/definitions/Task"
+                }
+            }
+        },
+        "PatchTask": {
+            "properties": {
+                "estimatedTime": {
+                    "type": "string"
                 }
             }
         }
