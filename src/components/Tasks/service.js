@@ -81,6 +81,11 @@ async function getAllUserTasks(user) {
             },
         },
         {
+            $sort: {
+                'tasks.estimatedTime': -1,
+            },
+        },
+        {
             $group: {
                 _id: '$_id',
                 count: { $sum: 1 },

@@ -21,12 +21,14 @@ publicPages.set('/sign_in', 'POST');
 publicPages.set(swaggerRoutes, 'GET');
 
 function isPublicAccess(requestPath, method) {
-    if (requestPath.endsWith("/")) {
+    if (requestPath.endsWith('/')) {
+        // eslint-disable-next-line no-param-reassign
         requestPath = requestPath.slice(0, -1);
     }
     if (requestPath.startsWith(swaggerRoutes) && method === 'GET') {
         return true;
     }
+
     return publicPages.has(requestPath) && publicPages.get(requestPath) === method;
 }
 
