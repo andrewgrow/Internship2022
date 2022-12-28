@@ -43,7 +43,10 @@ userSchema.pre('save', async function preSave(next) {
 
     if (!user.isModified('password')) return next();
     user.password = await bcrypt.hash(user.password, 8);
-    logger.debug('try to save user!', user);
+
+    if (process.env.ENV !== 'test') {
+        logger.debug('try to save user!', user);
+    }
 
     return next();
 });

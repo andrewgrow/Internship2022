@@ -49,7 +49,9 @@ const taskSchema = new mongoose.Schema(taskDescriptionObject);
  */
 /* eslint-disable no-param-reassign */
 taskSchema.post('save', (doc, next) => {
-    logger.info('Saved task:', doc);
+    if (process.env.ENV !== 'test') {
+        logger.info('Saved task:', doc);
+    }
     next();
 });
 

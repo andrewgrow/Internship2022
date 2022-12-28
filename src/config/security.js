@@ -48,7 +48,7 @@ class Security {
         return async (req, res, next) => {
             if (!isPublicAccess(req.path, req.method)) {
                 try {
-                    logger.debug(req.headers);
+                    // logger.debug(req.headers);
                     const data = this.getDataFromAuthToken(req);
                     const dataUser = data.userData;
                     const user = await User.findById(dataUser._id);
@@ -99,7 +99,9 @@ class Security {
         const token = (req.headers.authorization || '').replace(/^Bearer /, '');
         const data = jwt.verify(token, Security.getPublicKey());
 
-        logger.info('jwt decoded data:', data);
+        if (process.env.ENV !== 'test') {
+            logger.info('jwt decoded data:', data);
+        }
 
         return data;
     }

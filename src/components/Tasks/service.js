@@ -15,7 +15,9 @@ async function create(user, dataTransferObject) {
         await task.validate(); // if validation false will throw error
         const result = await task.save();
 
-        logger.info('Task created successful. Data:', result);
+        if (process.env.ENV !== 'test') {
+            logger.info('Task created successful. Data:', result);
+        }
 
         return result;
     } catch (error) {
@@ -35,7 +37,9 @@ async function patch(id, data) {
 
         const result = await taskDb.save();
 
-        logger.info('Task patched successful. Data:', result);
+        if (process.env.ENV !== 'test') {
+            logger.info('Task patched successful. Data:', result);
+        }
 
         return result;
     } catch (error) {
@@ -106,7 +110,9 @@ async function destroy(id) {
         throw new Error('Task not found for deleting!');
     }
 
-    logger.debug('Task destroyed!', result);
+    if (process.env.ENV !== 'test') {
+        logger.debug('Task destroyed!', result);
+    }
 
     return {
         message: `Task with id ${id} has been deleted.`,

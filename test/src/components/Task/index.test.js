@@ -36,8 +36,8 @@ describe('Test TASK component', () => {
         await mongoose.connection.dropDatabase();
     });
 
-    describe('Check index.js methods', () => {
-        describe('check protection by jwt', () => {
+    describe('Check TASKS routes', () => {
+        describe('protection by jwt', () => {
             function isReturnUnauthorized(res) {
                 expect(res).to.have.status(401);
                 expect(res.body).to.be.a('object');
@@ -86,7 +86,7 @@ describe('Test TASK component', () => {
             });
         });
 
-        describe('check routes functionality', () => {
+        describe('main functionality', () => {
             let jwtToken;
 
             before('', () => {
@@ -117,6 +117,45 @@ describe('Test TASK component', () => {
                             expect(res.body.data).to.have.property('totalTasks');
                             expect(res.body.data.totalTasks).to.equal(20);
                         });
+                });
+            });
+
+            describe('GET v1/task/all', () => {
+                it('should return all tasks of user', async () => {
+                    await chai.request(server)
+                        .get('/v1/task/all')
+                        .set('authorization', jwtToken)
+                        .then((res) => {
+                            expect(res).to.have.status(200);
+
+                            const data = res.body.data[0];
+
+                            expect(data).to.have.property('tasks');
+                            expect(data.tasks).to.be.an('array');
+                            expect(data.tasks.length).to.equal(20);
+                            expect(data).to.have.property('count');
+                            expect(data).to.have.property('totalEstimate');
+                            expect(data).to.have.property('_id');
+                            expect(data).to.have.property('name');
+                        });
+                });
+            });
+
+            describe('POST v1/task', () => {
+                it('should create new task', () => {
+
+                });
+            });
+
+            describe('PATCH v1/task', () => {
+                it('should path task by id', () => {
+
+                });
+            });
+
+            describe('DELETE v1/task', () => {
+                it('should delete task by id', () => {
+
                 });
             });
         });

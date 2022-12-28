@@ -8,8 +8,11 @@ const path = '/v1/task';
 const router = Router();
 
 router.use((req, res, next) => {
-    // e.g.  GET /v1/task HEADERS: {"user-agent":"Postman","accept":"*/*"} BODY: {} PARAMS:  {}
-    logger.debug(req.method, `${path}${req.path}`, 'HEADERS:', req.headers, 'BODY:', req.body, 'PARAMS:', req.params);
+    if (process.env.ENV !== 'test') {
+        // e.g.  GET /v1/task HEADERS: {"user-agent":"Postman","accept":"*/*"} BODY: {} PARAMS:  {}
+        logger.info(req.method, `${path}${req.path}`, 'HEADER:', req.headers, 'BODY:', req.body, 'PARAMS:', req.params);
+    }
+
     next();
 });
 
