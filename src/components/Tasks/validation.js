@@ -33,7 +33,7 @@ function sendErrorOrNext(validationResult, req, res, next) {
 }
 
 function validatePatch(req, res, next) {
-    const requestId = req.param('id');
+    const requestId = req.params.id;
     const requestTime = req.body.estimatedTime;
 
     const validationResult = schemaUpdate.validate({ id: requestId, estimatedTime: requestTime });
@@ -42,7 +42,7 @@ function validatePatch(req, res, next) {
 }
 
 function validateDestroy(req, res, next) {
-    const validationResult = schemaDestroy.validate({ id: req.param('id') });
+    const validationResult = schemaDestroy.validate({ id: req.params.id });
 
     return sendErrorOrNext(validationResult, req, res, next);
 }

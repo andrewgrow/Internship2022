@@ -56,7 +56,9 @@ async function destroy(req, res) {
             data: result,
         });
     } catch (error) {
-        logger.error(error);
+        if (process.env.ENV !== 'test') {
+            logger.error(error);
+        }
 
         return res.status(500).json({
             error: error.message,
@@ -72,7 +74,9 @@ async function patch(req, res) {
             data: result,
         });
     } catch (error) {
-        logger.error(error);
+        if (process.env.ENV !== 'test') {
+            logger.error(error);
+        }
 
         return res.status(500).json({
             error: error.message,

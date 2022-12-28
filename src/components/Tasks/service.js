@@ -43,7 +43,9 @@ async function patch(id, data) {
 
         return result;
     } catch (error) {
-        logger.error('Task patching error:', error);
+        if (process.env.ENV !== 'test') {
+            logger.error('Task patching error:', error);
+        }
         throw error;
     }
 }

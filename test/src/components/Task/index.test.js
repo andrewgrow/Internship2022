@@ -141,21 +141,78 @@ describe('Test TASK component', () => {
                 });
             });
 
-            describe('POST v1/task', () => {
-                it('should create new task', () => {
+            describe('working with one task', () => {
+                let task;
 
+                describe('POST v1/task', () => {
+                    it('should create new task', async () => {
+                        await chai.request(server)
+                            .post('/v1/task')
+                            .set('authorization', jwtToken)
+                            .then((res) => {
+                                expect(res).to.have.status(201);
+                                const { data } = res.body;
+
+                                expect(data).to.have.property('assignee');
+                                expect(data.assignee).to.be.equal(testUser._id.toString());
+                                task = data;
+                            });
+                    });
                 });
-            });
 
-            describe('PATCH v1/task', () => {
-                it('should path task by id', () => {
+                describe('PATCH v1/task', () => {
+                    it('should path task by id', async () => {
+                        await chai.request(server)
+                            .patch(`/v1/task/${task._id.toString()}`)
+                            .set('authorization', jwtToken)
+                            .send({ estimatedTime: task.estimatedTime + 1 })
+                            .then((res) => {
+                                expect(res).to.have.status(200);
+                                const { data } = res.body;
 
+                                expect(data).to.have.property('estimatedTime');
+                                expect(data.estimatedTime).to.not.equal(task.estimatedTime);
+                                expect(data.estimatedTime).to.equal(task.estimatedTime + 1);
+                            });
+                    });
+
+                    it('should be error if taskId does not exist for patching', async () => {
+                        await chai.request(server)
+                            .patch('/v1/task/63a4a59bd50f6f46b69e87a6')
+                            .set('authorization', jwtToken)
+                            .send({ estimatedTime: 1 })
+                            .then((res) => {
+                                expect(res).to.have.status(500);
+
+                                expect(res.body).to.have.property('error');
+                                expect(res.body.error).to.include('not found for patching!');
+                            });
+                    });
                 });
-            });
 
-            describe('DELETE v1/task', () => {
-                it('should delete task by id', () => {
+                describe('DELETE v1/task', () => {
+                    it('should delete task by id', async () => {
+                        await chai.request(server)
+                            .delete(`/v1/task/${task._id.toString()}`)
+                            .set('authorization', jwtToken)
+                            .then((res) => {
+                                expect(res).to.have.status(200);
+                                const { data } = res.body;
 
+                                expect(data).to.have.property('message');
+                                expect(data.message).to.include('has been deleted');
+                            });
+                    });
+
+                    it('should be error if try to delete task again', async () => {
+                        await chai.request(server)
+                            .delete(`/v1/task/${task._id.toString()}`)
+                            .set('authorization', jwtToken)
+                            .then((res) => {
+                                expect(res).to.have.status(500);
+                                expect(res.body.error).to.equal('Task not found for deleting!');
+                            });
+                    });
                 });
             });
         });
