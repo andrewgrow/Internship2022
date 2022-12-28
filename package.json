@@ -27,6 +27,7 @@
         "intel": "1.2.0",
         "joi": "17.7.0",
         "jsonwebtoken": "9.0.0",
+        "lodash": "4.17.21",
         "logrotate-stream": "0.2.8",
         "migrate-mongo": "9.0.0",
         "mongoose": "6.7.5",
