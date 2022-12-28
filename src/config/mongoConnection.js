@@ -16,7 +16,7 @@ async function init() {
         pass: process.env.DB_PASSWORD,
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        dbName: process.env.DB_DATABASE_NAME,
+        dbName: process.env.ENV === 'test' ? 'testDB' : process.env.DB_DATABASE_NAME,
     };
 
     try {

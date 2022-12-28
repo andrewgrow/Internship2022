@@ -10,7 +10,7 @@
         "lint": "npx eslint .",
         "lint:fix": "npx eslint . --fix",
         "start": "npx nodemon app.js",
-        "test": "npx mocha test/**/*.test.js --recursive --exit"
+        "test": "ENV=test npx mocha test/**/*.test.js --recursive --exit"
     },
     "dependencies": {
         "@faker-js/faker": "7.6.0",

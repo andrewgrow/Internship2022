@@ -1,15 +1,29 @@
-const chaiHttp = require('chai-http');
 const chai = require('chai');
-const server = require('../../../src/server/server');
-const Security = require('../../../src/config/security');
-const { User } = require('../../../src/components/Users/model');
+const chaiHttp = require('chai-http');
+const mongoose = require('mongoose');
+const server = require('../../../../src/server/server');
+const Security = require('../../../../src/config/security');
+const { User } = require('../../../../src/components/Users/model');
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
-const testUser = new User({ password: 'testtest' });
+const testUser = new User({
+    firstName: 'Name1',
+    lastName: 'Last1',
+    email: 'test@example.com',
+    password: 'testtest',
+});
 
 describe('Test TASK component', () => {
+    before('Before all tests', async () => {
+        await testUser.save();
+    });
+
+    after('After all tests', async () => {
+        await mongoose.connection.dropDatabase();
+    });
+
     describe('Check index.js methods', () => {
         describe('all routes must be protected by jwt', () => {
             function isReturnUnauthorized(res) {
@@ -63,7 +77,7 @@ describe('Test TASK component', () => {
         describe('check routes functionality', () => {
             let jwtToken;
 
-            before('', () => {
+            before('', async () => {
                 jwtToken = `Bearer ${Security.generateJwtToken(testUser)}`;
             });
 
